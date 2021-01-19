@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React from 'react';
+import Image from './Image';
+export default function App() {
+  const allowDrop = (ev) => {
+    ev.preventDefault();
+  };
+  const drag = (ev) => {
+    ev.dataTransfer.setData('text', ev.target.id);
+  };
+  const drop = (ev) => {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData('text');
+    ev.target.appendChild(document.getElementById(data));
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <div
+        style={{
+          width: '200px',
+          height: '300px',
+          padding: '10px',
+          border: '1px solid #aaaaaa',
+          float: 'left',
+        }}
+        id="div1"
+        onDrop={(e) => drop(e)}
+        onDragOver={(e) => allowDrop(e)}
+      ></div>
+      <div
+        style={{
+          width: '200px',
+          height: '300px',
+          padding: '10px',
+          border: '1px solid #aaaaaa',
+          float: 'left',
+        }}
+        id="div2"
+        onDrop={(e) => drop(e)}
+        onDragOver={(e) => allowDrop(e)}
+      ></div>
+      <Image draggable={true} onDragStart={(e) => drag(e)} />
     </div>
   );
 }
-
-export default App;
